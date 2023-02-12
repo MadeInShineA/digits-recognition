@@ -69,28 +69,32 @@ def update_predictions(predictions):
 
 while game_running:
     pygame.draw.rect(screen, "black", (0, 0, 480, 500), 0)
-    display_text()
     pygame.draw.rect(screen, "white", (480, 0, 20, 500), 0)
+    display_text()
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             if os.path.exists("image.jpg"):
                 os.remove("image.jpg")
             game_running = False
+
         if event.type == pygame.MOUSEBUTTONUP:
             mouse_position = pygame.mouse.get_pos()
             if drawing_area.collidepoint(mouse_position):
                 save_image()
                 predictions = predict()
                 update_predictions(predictions)
+
     if pygame.mouse.get_pressed() == (1, 0, 0):
         mouse_position = pygame.mouse.get_pos()
         if drawing_area.collidepoint(mouse_position):
             pygame.draw.circle(surface=screen, center=mouse_position, color="white", radius=12)
+
     if pygame.mouse.get_pressed() == (0, 0, 1):
         mouse_position = pygame.mouse.get_pos()
         if drawing_area.collidepoint(mouse_position):
             pygame.draw.circle(surface=screen, center=mouse_position, color="black", radius=12)
+
     if pygame.mouse.get_pressed() == (0, 1, 0):
         mouse_position = pygame.mouse.get_pos()
         if drawing_area.collidepoint(mouse_position):
