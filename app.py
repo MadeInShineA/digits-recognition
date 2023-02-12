@@ -1,10 +1,17 @@
 import pygame
+import tensorflow as tf
+from PIL import Image
+import numpy as np
+
+model = tf.keras.models.load_model('test-digits-model')
+
+
 
 pygame.init()
 screen = pygame.display.set_mode((1000, 500))
 
 drawing_area = pygame.Rect(500, 0, 500, 500)
-pygame.draw.rect(screen, "white", (500,0,500,500), 0)
+pygame.draw.rect(screen, "black", (500,0,500,500), 0)
 
 
 
@@ -69,10 +76,33 @@ text.append((eight_text_surface,eight_text_rect))
 
 nine_text_surface = my_font.render('9 : ', True, "white")
 nine_text_rect = basic_text_surface.get_rect(center=(100, 310))
+
+text.append((nine_text_surface,nine_text_rect))
 def display_text ():
     for surface, rect in text:
         screen.blit(surface, rect)
 
+def save_image():
+    rect = pygame.Rect(500, 0, 500, 500)
+    sub = screen.subsurface(rect)
+    pygame.image.save(sub, "image.jpg")
+def predict():
+    img = Image.open("image.jpg").convert('L').resize((28, 28))
+    img = np.array(img)
+    predictions = model.predict(img[None, :, :])
+    return predictions
+def update_predictions(predictions):
+    index = 0
+    max_index = np.where(predictions[0] == np.amax(predictions[0]))
+    for surface, rect in text[1:]:
+        text.remove((surface, rect))
+        if index == max_index[0]:
+            text_color = "green"
+        else:
+            text_color = "white"
+        surface = my_font.render(str(index) +" : "+ str(round(predictions[0][index] *100, 2))+" %", True, text_color)
+        text.append((surface, rect))
+        index +=1
 
 
 
@@ -86,17 +116,21 @@ while game_running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             game_running = False
+        if event.type == pygame.MOUSEBUTTONUP:
+            save_image()
+            predictions = predict()
+            update_predictions(predictions)
     if pygame.mouse.get_pressed() == (1, 0, 0):
         mouse_position = pygame.mouse.get_pos()
         if drawing_area.collidepoint(mouse_position):
-            pygame.draw.circle(surface=screen, center=mouse_position, color="black", radius=7)
+            pygame.draw.circle(surface=screen, center=mouse_position, color="white", radius=7)
     if pygame.mouse.get_pressed() == (0, 0, 1):
         mouse_position = pygame.mouse.get_pos()
         if drawing_area.collidepoint(mouse_position):
-            pygame.draw.circle(surface=screen, center=mouse_position, color="white", radius=10)
+            pygame.draw.circle(surface=screen, center=mouse_position, color="black", radius=10)
     if pygame.mouse.get_pressed() == (0, 1, 0):
         mouse_position = pygame.mouse.get_pos()
         if drawing_area.collidepoint(mouse_position):
-            pygame.draw.rect(screen, "white", (500,0,500,500), 0)
+            pygame.draw.rect(screen, "black", (500,0,500,500), 0)
 
     pygame.display.flip()
