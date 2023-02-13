@@ -40,8 +40,7 @@ def display_text ():
         screen.blit(surface, rect)
 
 def save_image():
-    rect = pygame.Rect(500, 0, 500, 500)
-    sub = screen.subsurface(rect)
+    sub = screen.subsurface(drawing_area)
     pygame.image.save(sub, "image.jpg")
 def predict():
     img = Image.open("image.jpg").convert('L').resize((28, 28))
