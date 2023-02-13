@@ -3,6 +3,9 @@ import tensorflow as tf
 from PIL import Image
 import numpy as np
 import os
+from tensorflow.python.ops.numpy_ops import np_config
+
+np_config.enable_numpy_behavior()
 
 model = tf.keras.models.load_model('final-cnn-digits-model')
 
@@ -46,7 +49,7 @@ def predict():
     img = Image.open("image.jpg").convert('L').resize((28, 28))
     img = np.array(img)
     img = img/255
-    predictions = model.predict(img[None, :, :], verbose=0)
+    predictions = model(img[None, :, :]).tolist()
     return predictions
 def update_predictions(predictions):
     index = 0
