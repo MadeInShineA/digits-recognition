@@ -9,16 +9,11 @@ np_config.enable_numpy_behavior()
 
 model = tf.keras.models.load_model('final-cnn-digits-model')
 
-
-
 pygame.init()
 screen = pygame.display.set_mode((1000, 500))
 
 drawing_area = pygame.Rect(500, 0, 500, 500)
 pygame.draw.rect(screen, "black", (500,0,500,500), 0)
-
-
-
 
 pygame.display.set_caption("Image recognition")
 
@@ -63,11 +58,6 @@ def update_predictions(predictions):
         surface = my_font.render(str(index) +" : "+ str(round(predictions[0][index] *100, 2))+" %", True, text_color)
         text.append((surface, rect))
         index +=1
-
-
-
-
-
 
 while game_running:
     pygame.draw.rect(screen, "black", (0, 0, 480, 500), 0)
