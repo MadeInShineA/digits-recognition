@@ -5,7 +5,7 @@ Python application to recognize handwritten digits in real time!
 ### Project's motivations
 I've always been interested in Artificial Intelligence and came across 3B1B's video about neural networks
 
-[![IMAGE_ALT](ressources/video_thumbnail.png)](https://www.youtube.com/watch?v=aircAruvnKk&list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi&ab_channel=3Blue1Brown)  
+[![IMAGE_ALT](ressources/3b1b_video_thumbnail.jpg)](https://www.youtube.com/watch?v=aircAruvnKk&list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi&ab_channel=3Blue1Brown)  
 
 That's why I started with one of the most basic NN project, digits recognition.
 
