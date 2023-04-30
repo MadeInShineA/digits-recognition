@@ -15,7 +15,7 @@ screen = pygame.display.set_mode((1000, 500))
 drawing_area = pygame.Rect(500, 0, 500, 500)
 pygame.draw.rect(screen, "black", (500,0,500,500), 0)
 
-pygame.display.set_caption("Image recognition")
+pygame.display.set_caption("Digits recognition")
 
 game_running = True
 
